@@ -14,17 +14,7 @@
         <input type="submit" value="Soumettre">
     </form>
     <script src="/socket.io/socket.io.js"></script>
-
-    <script>
-      var socket = io();
-      socket.on('connect', () => {
-          console.log('Connecté au server après un refresh.');
-      });
-
-      socket.on('disconnect', ()=>{
-        console.log('Déconnecté du serveur.');
-      });
-    </script>
+    <script src="/js/index.js"></script>
 </body>
 
 </html>

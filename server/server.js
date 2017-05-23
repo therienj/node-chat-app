@@ -12,10 +12,17 @@ var io = socketIO(server);
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
-    console.log('nouvel usager');
+    console.log('Nouvel usager');
+
+    socket.emit('newEmail', {
+        from: 'abc@mail.com',
+        body: 'Salut et bon voyage',
+        to: 'cba@mail.com'
+    });
+
     socket.on('disconnect', ()=>{
         console.log('Client déconnecté.');   
-    })
+    });
 });
 
 io.on('disconnect', () => {

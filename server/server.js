@@ -1,8 +1,9 @@
+//ici on crée les évenements côté server (reçoit le message) vers client (envoi au client browser)
 const path = require('path');
 const http = require('http');
 const express = require('express');
-const socketIO = require('socket.io')
-
+const socketIO = require('socket.io');
+const Dte = Date("YYYY-mm-ddTHH:MM:ssZ");
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 var app = express();
@@ -14,10 +15,25 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('Nouvel usager');
 
-    socket.emit('newEmail', {
-        from: 'abc@mail.com',
+    // socket.emit('newEmail', {
+    //     from: 'normand@mail.com',
+    //     body: 'Salut et bon voyage',
+    //     to: 'diane@mail.com'
+    // });
+
+    // socket.on('createEmail', (newEmail) => {
+    //     console.log('createEmail', newEmail);
+    // });
+
+    socket.emit('newMessage', {
+        from: 'Un Tel',
         body: 'Salut et bon voyage',
-        to: 'cba@mail.com'
+        createdAt: Dte
+
+    });
+
+    socket.on('createMessage', (message) => {
+        console.log('createMessage', message);
     });
 
     socket.on('disconnect', ()=>{

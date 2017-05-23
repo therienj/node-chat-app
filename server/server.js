@@ -25,15 +25,23 @@ io.on('connection', (socket) => {
     //     console.log('createEmail', newEmail);
     // });
 
-    socket.emit('newMessage', {
-        from: 'Un Tel',
-        body: 'Salut et bon voyage',
-        createdAt: Dte
+//la manière d'émettre un évenement on le trappe dans index.js avec
+//socket.on('newMessage'...
 
-    });
+    // socket.emit('newMessage', {
+    //     from: 'Un Tel',
+    //     body: 'Salut et bon voyage',
+    //     createdAt: Dte
+
+    // });
 
     socket.on('createMessage', (message) => {
         console.log('createMessage', message);
+        io.emit('newMessage', {
+            from: message.from,
+            body: message.body,
+            createdAt: Dte
+        })
     });
 
     socket.on('disconnect', ()=>{

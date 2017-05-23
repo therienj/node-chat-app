@@ -12,10 +12,14 @@ socket.on('connect', function ()  {
     //     from: 'deux@mail.com'
     // });
 
-    socket.emit('createMessage', {
-        from: 'De Moi',
-        body: 'Là je crée un nouveau message'
-    });
+//ici on crée l'évenemt côté client (crée un message)
+//il est trappé dans server.js par socket.on('createMessage'...
+
+    // socket.emit('createMessage', {
+    //     from: 'De Moi',
+    //     body: 'Là je crée un nouveau message',
+    //     createdAt: Dte
+    // });
 });
 
 socket.on('disconnect', function () {

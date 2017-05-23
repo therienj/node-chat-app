@@ -1,4 +1,5 @@
 //ici on crée les évenements côté server (reçoit le message) vers client (envoi au client browser)
+
 const path = require('path');
 const http = require('http');
 const express = require('express');
@@ -12,7 +13,9 @@ var io = socketIO(server);
 
 app.use(express.static(publicPath));
 
+
 io.on('connection', (socket) => {
+   
     console.log('Nouvel usager');
 
     // socket.emit('newEmail', {
@@ -28,21 +31,26 @@ io.on('connection', (socket) => {
 //la manière d'émettre un évenement on le trappe dans index.js avec
 //socket.on('newMessage'...
 
-    // socket.emit('newMessage', {
-    //     from: 'Un Tel',
-    //     body: 'Salut et bon voyage',
-    //     createdAt: Dte
+    socket.emit('newMessage',  {
+         from: "Admin",
+         body: 'Bienvenue dans App',
+         createdAt: Dte
+   });
 
-    // });
+    // socket.on('createMessage', (message) => {
+    //     console.log('createMessage', message);
+    //     io.emit('newMessage', {
+    //         from: message.from,
+    //         body: message.body,
+    //         createdAt: Dte
+    //     });
 
-    socket.on('createMessage', (message) => {
-        console.log('createMessage', message);
-        io.emit('newMessage', {
-            from: message.from,
-            body: message.body,
+
+        socket.broadcast.emit('newMessage', {
+            from: 'Admin',
+            body: 'Voici un nouvel usager.',
             createdAt: Dte
-        })
-    });
+         });
 
     socket.on('disconnect', ()=>{
         console.log('Client déconnecté.');   

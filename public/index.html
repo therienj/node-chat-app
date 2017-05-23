@@ -8,11 +8,14 @@
 
 <body>
     <p>Bienvenue sur l'application de chat, on ne fait que commencer avec NodeJS</p>
-    <form action="/action_page.php">
+    <form action="">
         Prénom : <input type="text" name="fname"><br><br>
         Nom : <input type="text" name="lname"><br><br>
+        Message: <input type="text" name="message" id="mess" value = '' ><br><br>
         <input type="submit" value="Soumettre">
     </form>
+
+</script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/index.js"></script>
 </body>

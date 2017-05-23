@@ -15,11 +15,11 @@ socket.on('connect', function ()  {
 //ici on crée l'évenemt côté client (crée un message)
 //il est trappé dans server.js par socket.on('createMessage'...
 
-    // socket.emit('createMessage', {
-    //     from: 'De Moi',
-    //     body: 'Là je crée un nouveau message',
-    //     createdAt: Dte
-    // });
+    socket.emit('createMessage', {
+        from: 'Admin',
+        body: 'Bienvenue dans App',
+        createdAt: Dte
+    });
 });
 
 socket.on('disconnect', function () {
@@ -31,5 +31,8 @@ socket.on('disconnect', function () {
 // });
 
 socket.on('newMessage', function(message){
-    console.log('Nouveau message', message );
+    console.log(message.body + ' de ' + message.from );
+    console.log(message);
+    txt = message.body;
 });
+

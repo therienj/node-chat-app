@@ -17,7 +17,7 @@ socket.on('connect', function ()  {
 
     socket.emit('createMessage', {
         from: 'Admin',
-        body: 'Bienvenue dans App',
+        text: 'Bienvenue dans App',
         createdAt: Dte
     });
 });
@@ -31,8 +31,8 @@ socket.on('disconnect', function () {
 // });
 
 socket.on('newMessage', function(message){
-    console.log(message.body + ' de ' + message.from );
+    console.log(message.text + ' de ' + message.from );
     console.log(message);
-    txt = message.body;
+    txt = message.text;
 });
 

@@ -8,15 +8,18 @@
 
 <body>
     <p>Bienvenue sur l'application de chat, on ne fait que commencer avec NodeJS</p>
-    <form action="">
-        Prénom : <input type="text" name="fname"><br><br>
-        Nom : <input type="text" name="lname"><br><br>
-        Message: <input type="text" name="message" id="mess" value = '' ><br><br>
+
+    <ol id="messages"></ol>
+
+    <form id="message-form">
+       Message: <input type="text" name="message" placeholder="Message"><br><br>
+        De: <input type="text" name="from" placeholder="from"><br><br>
         <input type="submit" value="Soumettre">
     </form>
 
 </script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/libs/jquery.js"></script>
     <script src="/js/index.js"></script>
 </body>
 

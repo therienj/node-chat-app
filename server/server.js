@@ -34,12 +34,14 @@ io.on('connection', (socket) => {
 
     socket.emit('newMessage',  generateMessage('Admin', 'Bienvenue dans App'));
 
-    socket.on('createMessage', (message) => {
+    socket.broadcast.emit('newMessage', generateMessage('Admin', 'Un nouvel usage'));
+
+    socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
+        callback('Data venant du serveur');
     });     
 
-    socket.broadcast.emit('newMessage', generateMessage('Admin', 'Un nouvel usage'));
 
     socket.on('disconnect', ()=>{
         console.log('Client déconnecté.');   

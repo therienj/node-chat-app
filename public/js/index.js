@@ -25,13 +25,23 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function(message){
     console.log(message.text + ' de ' + message.from );
-    console.log(message);
-    txt = message.text;
+    //console.log(message);
+    //txt = message.text;
     var li = jQuery('<li></li>');
     li.text(`${message.from}:  ${message.text}`);
 
     jQuery('#messages').append(li);
 
+});
+
+socket.on('newLocationMessage', function (message) {
+    var li = jQuery('<li></li>');
+    var a = jQuery('<a target= "_blank">Ma position actuelle</a>');
+    
+    li.text(`${message.from}:`);
+    a.attr('href', message.url);
+    li.append(a);
+    jQuery('#messages').append(li);
 });
 
 
@@ -55,3 +65,23 @@ jQuery('#message-form').on('submit', function (e) {
 
     });
 });
+
+//code de géolocalisation pour le button 'send-location'
+var locationButton = jQuery('#send-location');
+locationButton.on ('click', function () {
+    if (!navigator.geolocation) {
+        return alert('Géolocation pas supporté par votre fureteur.');
+    }
+
+    navigator.geolocation.getCurrentPosition ( function (position){
+        console.log(position);
+        //cette ligne renvoi les coords à server.js qui les affichent
+        socket.emit('createLocationMessage', {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        });
+    }, function (){
+        alert('Impossible de trouver vos coordonnées.');
+    });
+});
+

@@ -3,20 +3,25 @@
 
 <head>
     <meta charset="utf-8">
-
+    <script>  function mon_reset () {
+            document.getElementById("mess").value = "";
+            document.getElementById("de").value="";
+        }
+    </script>
 </head>
 
 <body>
+    
     <p>Bienvenue sur l'application de chat, on ne fait que commencer avec NodeJS</p>
 
     <ol id="messages"></ol>
 
     <form id="message-form">
-       Message: <input type="text" name="message" placeholder="Message"><br><br>
-        De: <input type="text" name="from" placeholder="from"><br><br>
-        <input type="submit" value="Soumettre">
-    </form>
-
+       Message: <input id="mess" type="text" name="message" placeholder="Message"></input><br><br>
+        De: <input id="de" type="text" name="from" placeholder="from"></input><br><br>
+        <input type="submit" value="Soumettre" onmouseout="mon_reset ()"></input>
+    </form><br>
+        <button id="send-location">Envoyer coordonnées</button>
 </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery.js"></script>

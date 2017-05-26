@@ -58,11 +58,14 @@ socket.on('newLocationMessage', function (message) {
 jQuery('#message-form').on('submit', function (e) {
     e.preventDefault();
 
-    socket.emit('createMessage', {
-        from: jQuery('[name=from]').val(),
-        text: jQuery('[name=message]').val()
-    }, function () {
+    var messageTextBox = jQuery('[name=message]');
+    var fromTextBox = jQuery('[name=from]');
 
+    socket.emit('createMessage', {
+        from: fromTextBox.val(),
+        text: messageTextBox.val()
+    }, function () {
+        
     });
 });
 

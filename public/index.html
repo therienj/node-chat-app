@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+
 <html>
 
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style.css">
     <script>  function mon_reset () {
             document.getElementById("mess").value = "";
             document.getElementById("de").value="";
@@ -10,19 +12,25 @@
     </script>
 </head>
 
-<body>
-    
-    <p>Bienvenue sur l'application de chat, on ne fait que commencer avec NodeJS</p>
+<body class="chat">
 
-    <ol id="messages"></ol>
+  <div class="chat__sidebar">
+    <h3>Membres :</h3>
+    <div id="users"></div>
+  </div>
+  <div class="chat__main">
+        <ol id="messages" class="chat__messages"></ol>
 
-    <form id="message-form">
-       Message: <input id="mess" type="text" name="message" placeholder="Message"></input><br><br>
-        De: <input id="de" type="text" name="from" placeholder="from"></input><br><br>
+        <div class="chat__footer">
+            <form id="message-form">
+       Message: <input id="mess" type="text" name="message" ></input>
+        De: <input id="de" type="text" name="from" ></input><br><br>
         <input type="submit" value="Soumettre" onmouseout="mon_reset ()"></input>
     </form><br>
         <button id="send-location">Envoyer coordonnées</button>
-</script>
+        </div>
+  </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery.js"></script>
     <script src="/js/index.js"></script>

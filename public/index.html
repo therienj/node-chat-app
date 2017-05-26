@@ -5,11 +5,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/css/style.css">
-    <script>  function mon_reset () {
-            document.getElementById("mess").value = "";
-            document.getElementById("de").value="";
-        }
-    </script>
+    
 </head>
 
 <body class="chat">
@@ -19,16 +15,16 @@
     <div id="users"></div>
   </div>
   <div class="chat__main">
-        <ol id="messages" class="chat__messages"></ol>
+    <ol id="messages" class="chat__messages"></ol>
 
-        <div class="chat__footer">
-            <form id="message-form">
-       Message: <input id="mess" type="text" name="message" ></input>
+    <div class="chat__footer">
+    <form id="message-form">
+       Message: <input id="mess" type="text" name="message" autofocus autocomplete="off" ></input>
         De: <input id="de" type="text" name="from" ></input><br><br>
-        <input type="submit" value="Soumettre" onmouseout="mon_reset ()"></input>
+        <button type="submit">Soumettre</button>
     </form><br>
         <button id="send-location">Envoyer coordonnées</button>
-        </div>
+    </div>
   </div>
 
     <script src="/socket.io/socket.io.js"></script>

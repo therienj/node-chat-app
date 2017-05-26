@@ -55,17 +55,20 @@ socket.on('newLocationMessage', function (message) {
 //     console.log('Data reçu', data);
 // }); 
 
-jQuery('#message-form').on('submit', function (e) {
+var soumettre = jQuery('#message-form');
+
+soumettre.on('submit', function (e) {
     e.preventDefault();
 
-    var messageTextBox = jQuery('[name=message]');
     var fromTextBox = jQuery('[name=from]');
+    var messageTextBox = jQuery('[name=message]');
 
     socket.emit('createMessage', {
         from: fromTextBox.val(),
         text: messageTextBox.val()
     }, function () {
-        
+        fromTextBox.val('');
+        messageTextBox.val('');
     });
 });
 
@@ -76,6 +79,8 @@ locationButton.on ('click', function () {
         return alert('Géolocation pas supporté par votre fureteur.');
     }
 
+    locationButton.attr('disabled','disabled');
+
     navigator.geolocation.getCurrentPosition ( function (position){
         console.log(position);
         //cette ligne renvoi les coords à server.js qui les affichent
@@ -83,7 +88,9 @@ locationButton.on ('click', function () {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
         });
-    }, function (){
+    locationButton.removeAttr('disabled').text('Envoyer coordonnées');
+}, function (){
+        locationButton.removeAttr('disabled').text('Envoyer coordonnées');
         alert('Impossible de trouver vos coordonnées.');
     });
 });

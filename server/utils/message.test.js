@@ -1,5 +1,5 @@
 var expect = require('expect');
-//var request = require('supertest');
+//var moment = require('moment');
 
 var  {generateMessage, generateLocationMessage} = require('./message');
 
@@ -11,7 +11,7 @@ describe('generateMessage', () => {
 
         expect(message.from).toBe(from);
         expect(message.text).toBe(text);
-        expect(message.createdAt).toBeA('string');
+        expect(message.createdAt).toBeA('number');
     });
 });
 
@@ -24,7 +24,7 @@ describe('generateLocationMessage', () => {
 
         var message = generateLocationMessage(from, latitude, longitude);
 
-        expect(message.createdAt).toBeA('string');
+        expect(message.createdAt).toBeA('number');
         expect(message).toInclude({from, url});
     });
 });

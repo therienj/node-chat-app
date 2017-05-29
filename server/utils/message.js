@@ -1,6 +1,11 @@
-const Dte = Date("YYYY-mm-ddTHH:MM:ssZ");
+var moment = require('moment');
 
-var generateMessage = (from, text) => {
+ var Dte = moment.locale("fr");
+// les formats suivant s'équivalent
+// Dte = moment().format('dddd do MMM YYYY hh:mm:ss a');
+ Dte = moment().format('LLLL a');
+
+var generateMessage = (from, text, createdAt) => {
     return {
         from,
         text,
@@ -8,7 +13,7 @@ var generateMessage = (from, text) => {
     };
 };
 
-var generateLocationMessage = (from, latitude, longitude) => {
+var generateLocationMessage = (from, latitude, longitude, createdAt) => {
     return{
         from,
         url:`https://www.google.com/maps?q=${latitude},${longitude}`,

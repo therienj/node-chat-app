@@ -1,6 +1,6 @@
 //ici on crée les évenements client vers serveur
 
-const Dte = Date("YYYY-mm-ddTHH:MM:ssZ");
+
 var socket = io();
 
 socket.on('connect', function ()  {
@@ -24,11 +24,11 @@ socket.on('disconnect', function () {
 // });
 
 socket.on('newMessage', function(message){
-    console.log(message.text + ' de ' + message.from );
+    //console.log(message.text + ' de ' + message.from );
     //console.log(message);
     //txt = message.text;
     var li = jQuery('<li></li>');
-    li.text(`${message.from}:  ${message.text}`);
+    li.text(`${message.from} :  ${message.text} créé le : ${message.createdAt}`);
 
     jQuery('#messages').append(li);
 
@@ -38,7 +38,7 @@ socket.on('newLocationMessage', function (message) {
     var li = jQuery('<li></li>');
     var a = jQuery('<a target= "_blank">Ma position actuelle</a>');
     
-    li.text(`${message.from}:`);
+    li.text(`${message.from} :  ${message.createdAt} : `);
     a.attr('href', message.url);
     li.append(a);
     jQuery('#messages').append(li);

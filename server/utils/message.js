@@ -2,8 +2,8 @@ var moment = require('moment');
 
  var Dte = moment.locale("fr");
 // les formats suivant s'équivalent
-// Dte = moment().format('dddd do MMM YYYY hh:mm:ss a');
- Dte = moment().format('LLLL a');
+ Dte = moment().format('dddd d MMM YYYY h:mm:ss a');
+ //Dte = moment().format('LLLL a');
 
 var generateMessage = (from, text, createdAt) => {
     return {

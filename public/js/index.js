@@ -24,17 +24,28 @@ socket.on('disconnect', function () {
 // });
 
 socket.on('newMessage', function(message){
-    //console.log(message.text + ' de ' + message.from );
-    //console.log(message);
-    //txt = message.text;
-    var li = jQuery('<li></li>');
-    li.text(`${message.from} :  ${message.text} créé le : ${message.createdAt}`);
-
-    jQuery('#messages').append(li);
-
+    var template = jQuery('#message-template').html();
+    var html = Mustache.render(template, {
+       text: message.text,
+       from: message.from,
+       createdAt: message.createdAt
+    });
+    jQuery('#messages').append(html);
 });
 
-socket.on('newLocationMessage', function (message) {
+// socket.on('newLocationMessage', function (message) {
+//     var template = jQuery('#location-message-template').html();
+//     var html = Mustache.render(template, {
+//        text: message.text,
+//        from: message.from,
+//        url: 'hhtps://google.ca',//message.url,
+//        createdAt: message.createdAt
+//     });
+//     jQuery('#messages').append(html);
+//  });
+
+
+    socket.on('newLocationMessage', function (message) {
     var li = jQuery('<li></li>');
     var a = jQuery('<a target= "_blank">Ma position actuelle</a>');
     
@@ -43,7 +54,6 @@ socket.on('newLocationMessage', function (message) {
     li.append(a);
     jQuery('#messages').append(li);
 });
-
 
 //ici on crée l'évenement côté client (crée un message)
 //il est trappé dans server.js par socket.on('createMessage'...

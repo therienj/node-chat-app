@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server/server.js",
     "test": "mocha server/**/*.test.js",
-    "test-wacth": "nodemon --exec 'npm'"
+    "test-wacth": "nodemon --exec 'npm test'"
   },
   "engine": {
     "node": "7.8.0"

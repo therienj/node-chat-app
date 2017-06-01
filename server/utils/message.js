@@ -14,7 +14,7 @@ var generateMessage = (from, text, createdAt) => {
 };
 
 var generateLocationMessage = (from, latitude, longitude, createdAt) => {
-    return{
+    return {
         from,
         url:`https://www.google.com/maps?q=${latitude},${longitude}`,
         createdAt: Dte

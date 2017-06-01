@@ -1,18 +1,25 @@
 //ici on crée les évenements client vers serveur
-
-
 var socket = io();
 
+function scrollToBottom () {
+    //Selectors
+    var messages = jQuery('#messages');
+    var newMessage = messages.children('li:last-child');
+
+    //Heights
+    var clientHeight = messages.prop('clientHeight');
+    var scrollTop = messages.prop('scrollTop');
+    var scrollHeight = messages.prop('scrollHeight');
+    var newMessageHeight = newMessage.innerHeight();
+    var lastMessageHeight = newMessage.prev().innerHeight();
+
+    if (clientHeight + scrollTop + newMessageHeight + newMessageHeight >= scrollHeight) {
+        messages.scrollTop(scrollHeight);
+    }
+}
+
 socket.on('connect', function ()  {
-    console.log('Connecté au server après un refresh.');
-
-    // socket.emit('createEmail', {
-    //     to: 'un@abc.com',
-    //     text: 'Hey c\'est Jacques',
-    //     from: 'deux@mail.com'
-    // });
-
-    
+    console.log('Connecté au serveur.');   
 });
 
 socket.on('disconnect', function () {
@@ -31,20 +38,22 @@ socket.on('newMessage', function(message){
        createdAt: message.createdAt
     });
     jQuery('#messages').append(html);
+    scrollToBottom (); 
 });
 
+//mon code qui fonctionne pas mais devrait
 // socket.on('newLocationMessage', function (message) {
 //     var template = jQuery('#location-message-template').html();
 //     var html = Mustache.render(template, {
-//        text: message.text,
 //        from: message.from,
-//        url: 'hhtps://google.ca',//message.url,
-//        createdAt: message.createdAt
+//        url: message.url
+//       // createdAt: message.createdAt
 //     });
 //     jQuery('#messages').append(html);
+//     scrollToBottom (); 
 //  });
 
-
+//mon code qui fonctionne
     socket.on('newLocationMessage', function (message) {
     var li = jQuery('<li></li>');
     var a = jQuery('<a target= "_blank">Ma position actuelle</a>');
@@ -53,6 +62,7 @@ socket.on('newMessage', function(message){
     a.attr('href', message.url);
     li.append(a);
     jQuery('#messages').append(li);
+    scrollToBottom (); 
 });
 
 //ici on crée l'évenement côté client (crée un message)
@@ -89,16 +99,17 @@ locationButton.on ('click', function () {
         return alert('Géolocation pas supporté par votre fureteur.');
     }
 
-    locationButton.attr('disabled','disabled');
+    locationButton.attr('disabled','disabled').text('Envoi des coordonnées');
 
     navigator.geolocation.getCurrentPosition ( function (position){
         console.log(position);
         //cette ligne renvoi les coords à server.js qui les affichent
+        locationButton.removeAttr('disabled').text('Envoyer coordonnées');
         socket.emit('createLocationMessage', {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
         });
-    locationButton.removeAttr('disabled').text('Envoyer coordonnées');
+    
 }, function (){
         locationButton.removeAttr('disabled').text('Envoyer coordonnées');
         alert('Impossible de trouver vos coordonnées.');

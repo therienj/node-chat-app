@@ -6,7 +6,6 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 const{generateMessage, generateLocationMessage} = require('./utils/message');
-
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 var app = express();
@@ -18,17 +17,7 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
    
-    console.log('Nouvel usager');
-
-    // socket.emit('newEmail', {
-    //     from: 'normand@mail.com',
-    //     body: 'Salut et bon voyage',
-    //     to: 'diane@mail.com'
-    // });
-
-    // socket.on('createEmail', (newEmail) => {
-    //     console.log('createEmail', newEmail);
-    // });
+    console.log('Nouvel usager connecté');
 
 //la manière d'émettre un évenement on le trappe dans index.js avec
 //socket.on('newMessage'...

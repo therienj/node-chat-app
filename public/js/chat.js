@@ -4,7 +4,7 @@ var socket = io();
 function scrollToBottom () {
     //Selectors
     var messages = jQuery('#messages');
-    var newMessage = messages.children('li:last-child');
+    var newMessage = messages.children('li');
 
     //Heights
     var clientHeight = messages.prop('clientHeight');
@@ -12,18 +12,38 @@ function scrollToBottom () {
     var scrollHeight = messages.prop('scrollHeight');
     var newMessageHeight = newMessage.innerHeight();
     var lastMessageHeight = newMessage.prev().innerHeight();
-
-    if (clientHeight + scrollTop + newMessageHeight + newMessageHeight >= scrollHeight) {
+    //debugger
+    if (clientHeight + scrollTop +  newMessageHeight + lastMessageHeight >= clientHeight) {
         messages.scrollTop(scrollHeight);
     }
 }
 
 socket.on('connect', function ()  {
-    console.log('Connecté au serveur.');   
+    console.log('Connecté au serveur.');  
+    var params = jQuery.deparam(window.location.search);
+
+     socket.emit('join', params, function(err) {
+       if (err) {
+          alert(err); 
+          window.location.href = '/';
+       }  else {
+          console.log('Connection sans erreur')
+       }
+     });
 });
 
 socket.on('disconnect', function () {
     console.log('Déconnecté du serveur.');
+});
+
+socket.on('updateUserList', function (users){
+    var ol = jQuery('<ol></ol>');
+
+    users.forEach(function(user){
+        ol.append(jQuery('<li></li>').text(user));
+    });
+
+    jQuery('#users').html(ol);
 });
 
 // socket.on('newEmail', function(email){
@@ -43,21 +63,22 @@ socket.on('newMessage', function(message){
 
 //mon code qui fonctionne pas mais devrait
 // socket.on('newLocationMessage', function (message) {
-//     var template = jQuery('#location-message-template').html();
-//     var html = Mustache.render(template, {
-//        from: message.from,
-//        url: message.url
-//       // createdAt: message.createdAt
-//     });
-//     jQuery('#messages').append(html);
-//     scrollToBottom (); 
-//  });
+//   var template = jQuery('#location-message-template').html();
+//   var html = Mustache.render(template, { 
+//     from: message.from,
+//     url: message.url,
+//     createdAt: message.createdAt
+//   });
+
+//   jQuery('#messages').append(html);
+//   scrollToBottom();
+// });
 
 //mon code qui fonctionne
     socket.on('newLocationMessage', function (message) {
     var li = jQuery('<li></li>');
     var a = jQuery('<a target= "_blank">Ma position actuelle</a>');
-    
+    debugger
     li.text(`${message.from} :  ${message.createdAt} : `);
     a.attr('href', message.url);
     li.append(a);
@@ -75,12 +96,12 @@ socket.on('newMessage', function(message){
 //     console.log('Data reçu', data);
 // }); 
 
-var soumettre = jQuery('#message-form');
 
-soumettre.on('submit', function (e) {
+jQuery('#message-form').on('submit', function (e) {
     e.preventDefault();
 
     var fromTextBox = jQuery('[name=from]');
+
     var messageTextBox = jQuery('[name=message]');
 
     socket.emit('createMessage', {

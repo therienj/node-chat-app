@@ -78,7 +78,7 @@ socket.on('newMessage', function(message){
     socket.on('newLocationMessage', function (message) {
     var li = jQuery('<li></li>');
     var a = jQuery('<a target= "_blank">Ma position actuelle</a>');
-    debugger
+    //debugger
     li.text(`${message.from} :  ${message.createdAt} : `);
     a.attr('href', message.url);
     li.append(a);
